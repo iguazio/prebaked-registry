@@ -9,5 +9,7 @@ A docker-registry built with pre-baked container images in it
 - jq installed
 - Create a local credentials.env file with the following contents:
 ```.env
-
+AVREZ_MANIFEST_GITHUB_ACCESS_TOKEN=<...>
+ARTIFACTORY_USERNAME=<...>
+ARTIFACTORY_PASSWORD=<...>
 ```
