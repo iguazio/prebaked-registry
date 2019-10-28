@@ -8,6 +8,7 @@ A docker-registry built with pre-baked container images in it
 - avrez - installed and working
 - jq installed
 - Create a local credentials.env file with the following contents:
+- Must run `docker login` to artifactory before running `make build-muted-registry`
 ```.env
 AVREZ_MANIFEST_GITHUB_ACCESS_TOKEN=<...>
 ARTIFACTORY_USERNAME=<...>

@@ -6,7 +6,7 @@ BASE_DOCKER_REGISTRY_VERSION=2.7.1
 
 # Usage examples:
 # Build a nuclio pre-baked registry (version 1.0.0) for iguazio version 2.8.0
-# > IGZ_VERSION=2.8.0 IGZ_NUCLIO_REGISTRY_VERSION=1.0.0 make build
+# > source ./credentials.env && IGZ_VERSION=2.8.0 IGZ_NUCLIO_REGISTRY_VERSION=1.0.0 make build
 # Release the pre-baked nuclio registry (version 1.0.0) to quay.io/iguazio
 # > IGZ_NUCLIO_REGISTRY_VERSION=1.0.0 make release-nuclio-registry
 
