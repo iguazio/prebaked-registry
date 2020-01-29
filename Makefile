@@ -2,6 +2,7 @@ RELEASE_REGISTRY_URL ?= quay.io/
 RELEASE_REGISTRY_USER ?= iguazio
 IGZ_NUCLIO_REGISTRY_VERSION ?= latest
 IGZ_VERSION ?= REPLACEME # e.g. 2.5.0
+VERSION ?= REPLACEME # a specific version to take images for, e.g. nuclio=1.3.12 -> prebaked-registry-nuclio=1.3.12
 BASE_DOCKER_REGISTRY_VERSION=2.7.1
 
 # Usage examples:
@@ -26,9 +27,14 @@ build-muted-registry:
 	rm -rf /tmp/distribution-library-image
 	@echo "Done building muted-registry"
 
+# simple - registry version == nuclio version
 .PHONY: build-nuclio-registry
 build-nuclio-registry:
-	nuclio/build_no_avrez.sh --version=$(IGZ_NUCLIO_REGISTRY_VERSION) --igz-version=$(IGZ_VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
+	nuclio/build.sh --version=$(IGZ_NUCLIO_REGISTRY_VERSION) --version=$(VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
+
+.PHONY: build-nuclio-registry-w-avrez
+build-nuclio-registry:
+	nuclio/build.sh --version=$(IGZ_NUCLIO_REGISTRY_VERSION) --igz-version=$(IGZ_VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
 
 .PHONY: release-nuclio-registry
 release-nuclio-registry:

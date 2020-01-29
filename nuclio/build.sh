@@ -30,25 +30,19 @@ if [[ -z ${VERSION} ]]; then
     exit 1
 fi
 
-if [[ -z ${IGZ_VERSION} ]]; then
-    printf "IGZ_VERSION not provided, cannot perform release\n"
-    exit 1
-fi
-
 if [[ -z ${BASE_REGISTRY_IMAGE} ]]; then
     printf "BASE_REGISTRY_IMAGE not provided, cannot perform release\n"
     exit 1
 fi
 
 printf "VERSION              = ${VERSION}\n"
-printf "IGZ_VERSION          = ${IGZ_VERSION}\n"
 printf "BASE_REGISTRY_IMAGE  = ${BASE_REGISTRY_IMAGE}\n"
 printf "\n"
 
 printf "\n## Sourcing credentials.env file (See README.md)\n"
 source credentials.env
 
-printf "\n## Releasing prebaked-registry-nuclio version ${VERSION}, with images from iguazio version ${IGZ_VERSION}\n"
+printf "\n## Releasing prebaked-registry-nuclio version ${VERSION}, with images from nuclio ${VERSION}\n"
 
 docker rm -f prebaked-registry-nuclio || true
 
