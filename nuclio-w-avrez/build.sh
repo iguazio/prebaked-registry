@@ -55,14 +55,20 @@ docker rm -f prebaked-registry-nuclio || true
 printf "\n## Running local registry: ${BASE_REGISTRY_IMAGE} \n"
 docker run --user 1000:1000 --rm -d -p 5000:5000 --name=prebaked-registry-nuclio ${BASE_REGISTRY_IMAGE}
 
-IMAGES_TO_BAKE=(
-"quay.io/nuclio/handler-builder-python-onbuild:${VERSION}-amd64"
-"quay.io/nuclio/handler-builder-golang-onbuild:${VERSION}-amd64"
-"quay.io/nuclio/handler-builder-nodejs-onbuild:${VERSION}-amd64"
-"quay.io/nuclio/handler-builder-java-onbuild:${VERSION}-amd64"
-"quay.io/nuclio/handler-builder-dotnetcore-onbuild:${VERSION}-amd64"
-"quay.io/nuclio/handler-builder-ruby-onbuild:${VERSION}-amd64"
-)
+printf "\n## Avrez resolving versions..."
+
+declare NUCLIO_AVREZ
+NUCLIO_AVREZ=$(avrez resolve \
+  --manifest-github-access-token ${AVREZ_MANIFEST_GITHUB_ACCESS_TOKEN} \
+  --filter-repos docker \
+  --docker-registry-override='{"iguazio_a": {"override_repo": "iguazio", "override_tag": "2.8_b2996_20191022194528"}, "iguazio_b": {"url": "https://artifactory.iguazeng.com:6555", "username": "'${ARTIFACTORY_USERNAME}'", "kind": "artifactory", "password": "'${ARTIFACTORY_PASSWORD}'", "account": "iguazio"}}' \
+  ${IGZ_VERSION} | jq -r '.docker_repos.nuclio')
+echo "Done"
+
+# readarray not available on mac and on earlier bash versions (lt 4) so we make do
+while IFS= read -r line; do
+    IMAGES_TO_BAKE+=("$line")
+done < <(echo $NUCLIO_AVREZ | jq -r '.images | with_entries(select(.key | match("handler";"i")))[].tags | flatten | .[]')
 
 printf "\nResolved images to bake:\n"
 printf '%s\n' "${IMAGES_TO_BAKE[@]}"

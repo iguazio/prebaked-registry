@@ -28,7 +28,7 @@ build-muted-registry:
 
 .PHONY: build-nuclio-registry
 build-nuclio-registry:
-	nuclio/build.sh --version=$(IGZ_NUCLIO_REGISTRY_VERSION) --igz-version=$(IGZ_VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
+	nuclio/build_no_avrez.sh --version=$(IGZ_NUCLIO_REGISTRY_VERSION) --igz-version=$(IGZ_VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
 
 .PHONY: release-nuclio-registry
 release-nuclio-registry:
