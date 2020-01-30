@@ -30,10 +30,10 @@ build-muted-registry:
 # simple - registry version == nuclio version
 .PHONY: build-nuclio-registry
 build-nuclio-registry:
-	nuclio/build.sh --version=$(IGZ_NUCLIO_REGISTRY_VERSION) --version=$(VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
+	nuclio/build.sh --version=$(VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
 
 .PHONY: build-nuclio-registry-w-avrez
-build-nuclio-registry:
+build-nuclio-registry-w-avrez:
 	nuclio/build.sh --version=$(IGZ_NUCLIO_REGISTRY_VERSION) --igz-version=$(IGZ_VERSION) --base-registry-image=iguazio/muted-registry:$(BASE_DOCKER_REGISTRY_VERSION)
 
 .PHONY: release-nuclio-registry
